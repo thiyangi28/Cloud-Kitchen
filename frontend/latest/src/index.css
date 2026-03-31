@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-brand-accent: #10b981;
+}
+
+body {
+  @apply bg-slate-900 text-slate-50 antialiased min-h-screen;
+}
+
+/* Base custom styles just in case for specific elements but keeping it minimal to use Tailwind mostly */
+input, textarea, select {
+  @apply bg-slate-800 border border-slate-700 rounded-lg p-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+}
+
+table {
+  @apply w-full text-left border-collapse;
+}
+
+th, td {
+  @apply p-4 border-b border-slate-700/50;
+}
+
+th {
+  @apply text-xs uppercase tracking-wider text-slate-400 font-semibold;
+}
+
+tbody tr {
+  @apply hover:bg-slate-800/30 transition-colors;
+}
+
+.loader-container {
+  @apply flex justify-center items-center min-h-[200px];
+}
+
+.loader {
+  @apply w-12 h-12 rounded-full border-4 border-slate-700/30 border-t-blue-500 animate-spin;
+}
