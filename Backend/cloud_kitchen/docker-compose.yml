@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:15
+    container_name: kitchen_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 211727
+      POSTGRES_DB: cloud_kitchen_db
+    ports:
+      - "5433:5432"
+
+#        local postgres port-5432
+#         docker port - 5433
