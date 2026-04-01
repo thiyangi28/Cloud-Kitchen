@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getAllOrders() {
+    public List<OrderDto> getAllOrders(int page, int size, String sortBy) {
         return orderRepository.findAll().stream()
                 .map(o -> new OrderDto(o.getId(), o.getOrderNumber(), o.getCustomerName(), o.getTotalPrice(), o.getStatus(), o.getVendor().getId(), null))
                 .collect(Collectors.toList());
@@ -98,5 +98,41 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByVendorId(vendorId).stream()
                 .map(o -> new OrderDto(o.getId(), o.getOrderNumber(), o.getCustomerName(), o.getTotalPrice(), o.getStatus(), o.getVendor().getId(), null))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderDto getOrderById(Long id) {
+        Order o = orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with ID: " + id));
+        return new OrderDto(o.getId(), o.getOrderNumber(), o.getCustomerName(), o.getTotalPrice(), o.getStatus(), o.getVendor().getId(), null);
+    }
+
+    @Override
+    @Transactional
+    public boolean updateOrder(OrderDto orderDto) {
+        Order order = orderRepository.findById(orderDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with ID: " + orderDto.getId()));
+        
+        order.setCustomerName(orderDto.getCustomerName());
+        order.setStatus(orderDto.getStatus());
+        
+        if (orderDto.getVendorId() != null) {
+            Vendor vendor = vendorRepository.findById(orderDto.getVendorId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Vendor not found with ID: " + orderDto.getVendorId()));
+            order.setVendor(vendor);
+        }
+        
+        orderRepository.save(order);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteOrder(Long id) {
+        if (!orderRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Order not found with ID: " + id);
+        }
+        orderRepository.deleteById(id);
+        return true;
     }
 }
