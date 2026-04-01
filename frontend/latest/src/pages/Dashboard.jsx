@@ -1,9 +1,28 @@
 import { useEffect, useState } from 'react';
 import { vendorAPI, orderAPI, userAPI } from '../api';
 import { Users, Store, ClipboardList, TrendingUp } from 'lucide-react';
+import Carousel from '../components/Carousel';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({ vendors: 0, orders: 0, revenue: 0, users: 0 });
+
+  const carouselImages = [
+    {
+      url: '/dashboard_food_1_1774981440769.png',
+      title: 'Exquisite Pasta Creations',
+      subtitle: 'Experience the art of Italian cuisine with our handcrafted gourmet pasta.'
+    },
+    {
+      url: '/dashboard_food_2_1774981462002.png',
+      title: 'Premium Burger Collection',
+      subtitle: 'Indulge in juicy, charcoal-grilled burgers crafted with the finest ingredients.'
+    },
+    {
+      url: '/dashboard_food_3_1774981478929.png',
+      title: 'Artistic Sushi Selection',
+      subtitle: 'Fresh, vibrant sushi rolls prepared by our master chefs for a true taste of Japan.'
+    }
+  ];
 
   useEffect(() => {
     fetchData();
@@ -33,9 +52,11 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-10">
+      <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">Dashboard Overview</h1>
       </div>
+
+      <Carousel images={carouselImages} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-slate-800 border border-slate-700/50 p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 hover:border-blue-500/50">
