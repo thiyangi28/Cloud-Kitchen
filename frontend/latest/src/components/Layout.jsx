@@ -1,8 +1,15 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Store, UtensilsCrossed, ClipboardList, LogOut } from 'lucide-react';
+import BackgroundCarousel from './BackgroundCarousel';
 
 const Layout = () => {
   const location = useLocation();
+
+  const backgroundImages = [
+    '/login_bg_1_1774981499798.png',
+    '/login_bg_2_1774981519376.png',
+    '/login_bg_3_1774981540986.png',
+  ];
 
   const links = [
     { name: 'Dashboard', path: '/', icon: <LayoutDashboard size={20} /> },
@@ -17,8 +24,10 @@ const Layout = () => {
   };
 
   return (
-    <div className="flex h-screen bg-slate-900 text-slate-100">
-      <aside className="w-64 border-r border-slate-800 bg-slate-900/90 py-6 px-4 flex flex-col gap-8 flex-shrink-0 relative z-10 w-[240px]">
+    <div className="flex h-screen text-slate-100 relative overflow-hidden">
+      <BackgroundCarousel images={backgroundImages} interval={15000} />
+      
+      <aside className="w-64 border-r border-white/10 bg-white/5 backdrop-blur-3xl py-6 px-4 flex flex-col gap-8 flex-shrink-0 relative z-10 w-[240px]">
         <div className="flex items-center gap-3 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500 px-2">
           <UtensilsCrossed className="text-blue-500" /> CloudKitchen
         </div>
@@ -33,8 +42,8 @@ const Layout = () => {
                     to={link.path}
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${
                       isActive 
-                        ? 'bg-blue-500/10 text-blue-400 font-semibold' 
-                        : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                        ? 'bg-blue-500/10 text-blue-400 font-semibold border border-blue-500/20' 
+                        : 'text-slate-400 hover:bg-white/5 hover:text-slate-200'
                     }`}
                   >
                     {link.icon} {link.name}
@@ -53,8 +62,10 @@ const Layout = () => {
         </button>
       </aside>
       
-      <main className="flex-1 p-8 overflow-y-auto w-full">
-        <Outlet />
+      <main className="flex-1 p-8 overflow-y-auto w-full relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
