@@ -24,4 +24,27 @@ public class VendorController {
     public List<VendorDto> getAllVendors() {
         return vendorService.getAllVendors();
     }
+
+    @GetMapping("/get/{id}")
+    public VendorDto getVendorById(@PathVariable Long id) {
+        return vendorService.getVendorById(id);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateVendor(@RequestBody VendorDto vendorDto) {
+        if (vendorService.updateVendor(vendorDto)) {
+            return ResponseEntity.ok("Vendor updated successfully!");
+        } else {
+            return ResponseEntity.status(404).body("Vendor not found!");
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteVendor(@PathVariable Long id) {
+        if (vendorService.deleteVendor(id)) {
+            return ResponseEntity.ok("Vendor deleted successfully!");
+        } else {
+            return ResponseEntity.status(404).body("Vendor not found!");
+        }
+    }
 }
