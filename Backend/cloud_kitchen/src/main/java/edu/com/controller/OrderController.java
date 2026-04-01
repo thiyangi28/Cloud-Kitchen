@@ -21,21 +21,40 @@ public class OrderController {
     }
 
     @GetMapping("/all")
-    public List<OrderDto> getAllOrders() {
-        return orderService.getAllOrders();
-    }
-
-    @GetMapping("/paged")
-    public List<OrderDto> getAllOrdersPaged(
+    public List<OrderDto> getAllOrders(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy
     ) {
-        return orderService.getAllOrdersPaged(page, size, sortBy);
+
+        return orderService.getAllOrders(page, size, sortBy);
     }
 
     @GetMapping("/vendor/{vendorId}")
     public List<OrderDto> getOrdersByVendor(@PathVariable Long vendorId) {
         return orderService.getOrdersByVendor(vendorId);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<OrderDto> getOrderById(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.getOrderById(id));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateOrder(@RequestBody OrderDto orderDto) {
+        if (orderService.updateOrder(orderDto)) {
+            return ResponseEntity.ok("Order updated successfully!");
+        } else {
+            return ResponseEntity.status(404).body("Order not found!");
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteOrder(@PathVariable Long id) {
+        if (orderService.deleteOrder(id)) {
+            return ResponseEntity.ok("Order deleted successfully!");
+        } else {
+            return ResponseEntity.status(404).body("Order not found!");
+        }
     }
 }
