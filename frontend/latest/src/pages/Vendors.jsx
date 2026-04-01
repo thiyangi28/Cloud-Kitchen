@@ -133,6 +133,7 @@ const Vendors = () => {
                 <th className="px-6 py-4 text-xs tracking-wider uppercase text-slate-400 font-semibold border-b border-slate-700">Name</th>
                 <th className="px-6 py-4 text-xs tracking-wider uppercase text-slate-400 font-semibold border-b border-slate-700">Contact</th>
                 <th className="px-6 py-4 text-xs tracking-wider uppercase text-slate-400 font-semibold border-b border-slate-700">Location</th>
+                <th className="px-6 py-4 text-xs tracking-wider uppercase text-slate-400 font-semibold border-b border-slate-700">Status</th>
                 <th className="px-6 py-4 text-xs tracking-wider uppercase text-slate-400 font-semibold border-b border-slate-700 text-right">Actions</th>
               </tr>
             </thead>
@@ -148,6 +149,11 @@ const Vendors = () => {
                   </td>
                   <td className="px-6 py-4 text-slate-300">{vendor.contact}</td>
                   <td className="px-6 py-4 text-slate-300">{vendor.location}</td>
+                  <td className="px-6 py-4">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 tracking-tighter uppercase">
+                      Active
+                    </span>
+                  </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">
                       <button 
