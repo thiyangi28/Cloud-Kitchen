@@ -39,4 +39,28 @@ public class VendorServiceImpl implements VendorService {
         if (v == null) return null;
         return new VendorDto(v.getId(), v.getName(), v.getContact(), v.getLocation());
     }
+
+    @Override
+    public boolean updateVendor(VendorDto vendorDto) {
+        if (vendorRepository.existsById(vendorDto.getId())) {
+            Vendor vendor = vendorRepository.findById(vendorDto.getId()).orElse(null);
+            if (vendor != null) {
+                vendor.setName(vendorDto.getName());
+                vendor.setContact(vendorDto.getContact());
+                vendor.setLocation(vendorDto.getLocation());
+                vendorRepository.save(vendor);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteVendor(Long id) {
+        if (vendorRepository.existsById(id)) {
+            vendorRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }
